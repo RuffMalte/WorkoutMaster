@@ -29,14 +29,11 @@ struct WorkoutItemSheetView: View {
 				Button {
 					
 				} label: {
-					HStack {
-						Spacer()
 						Label("Start Workout", systemImage: "play.fill")
 							.foregroundStyle(.white)
 							.font(.system(.headline, design: .rounded, weight: .bold))
-						Spacer()
-					}
 				}
+				.centeredHStack()
 				.coloredPillBackground(.green)
 				.buttonStyle(.plain)
 				

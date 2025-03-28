@@ -23,14 +23,12 @@ struct WorkoutView: View {
 					Button {
 						
 					} label: {
-						HStack {
-							Spacer()
-							Label("Add Workout plan", systemImage: "plus")
-								.foregroundStyle(.white)
-								.font(.system(.headline, design: .rounded, weight: .bold))
-							Spacer()
-						}
+					
+						Label("Add Workout plan", systemImage: "plus")
+							.foregroundStyle(.white)
+							.font(.system(.headline, design: .rounded, weight: .bold))
 					}
+					.centeredHStack()
 					.buttonStyle(.plain)
 					.coloredPillBackground(.accentColor)
 
@@ -41,7 +39,7 @@ struct WorkoutView: View {
 			.navigationTitle("Workouts")
 			
 			.sheet(isPresented: $isShowingExerciseSheetView) {
-				
+				ExercisesListView()
 			}
 			
 			.toolbar {

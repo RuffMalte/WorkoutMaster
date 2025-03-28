@@ -9,24 +9,28 @@ import SwiftUI
 
 struct ColoredPillBackground: ViewModifier {
 	let color: Color
+	let padding: CGFloat
+	let radius: CGFloat
 	
 	func body(content: Content) -> some View {
 		content
-			.padding()
+			.padding(padding)
 			.background {
-				RoundedRectangle(cornerRadius: 40)
+				RoundedRectangle(cornerRadius: radius)
 					.foregroundStyle(color)
 			}
 	}
 }
 
-
 struct BarColoredPillBackground: ViewModifier {
+	let padding: CGFloat
+	let radius: CGFloat
+	
 	func body(content: Content) -> some View {
 		content
-			.padding()
+			.padding(padding)
 			.background {
-				RoundedRectangle(cornerRadius: 40)
+				RoundedRectangle(cornerRadius: radius)
 					.foregroundStyle(.bar)
 			}
 	}
@@ -34,12 +38,20 @@ struct BarColoredPillBackground: ViewModifier {
 
 
 extension View {
-	func coloredPillBackground(_ color: Color = .green) -> some View {
-		self.modifier(ColoredPillBackground(color: color))
+	func coloredPillBackground(
+		_ color: Color = .green,
+		padding: CGFloat = PaddingConstants.medium,
+		radius: CGFloat = RadiusConstants.extraLarge
+	) -> some View {
+		self.modifier(ColoredPillBackground(color: color, padding: padding, radius: radius))
 	}
 	
-	func barColoredPillBackground() -> some View {
-		self.modifier(BarColoredPillBackground())
+	func barColoredPillBackground(
+		padding: CGFloat = PaddingConstants.medium,
+		radius: CGFloat = RadiusConstants.extraLarge
+	) -> some View {
+		self.modifier(BarColoredPillBackground(padding: padding, radius: radius))
 	}
+	
 	
 }

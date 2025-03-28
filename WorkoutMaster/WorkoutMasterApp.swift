@@ -37,5 +37,6 @@ struct WorkoutMasterApp: App {
         WindowGroup {
             ContentView()
         }
+		.modelContainer(container)
     }
 }
