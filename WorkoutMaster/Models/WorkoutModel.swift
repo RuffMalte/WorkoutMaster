@@ -31,6 +31,10 @@ class WorkoutModel: Identifiable {
 		groups.append(newGroup)
 		return newGroup
 	}
+	
+	var calculatedSetsAndExercises: String {
+		return "heeeeellllooooooo"
+	}
 
 	
 }

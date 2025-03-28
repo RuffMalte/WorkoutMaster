@@ -14,6 +14,7 @@ let previewContainer: ModelContainer = {
 		let container = try ModelContainer(
 			for:
 				ExerciseModel.self,
+				WorkoutModel.self,
 			configurations: ModelConfiguration(isStoredInMemoryOnly: true)
 		)
 		let context = container.mainContext
@@ -21,6 +22,9 @@ let previewContainer: ModelContainer = {
 		
 		// Add Sample data
 		ExerciseModel.previewItems.forEach { context.insert($0) }
+		WorkoutModel.previewItems.forEach { context.insert($0) }
+		WorkoutGroupModel.previewItems.forEach { context.insert($0) }
+		
 		
 		return container
 	} catch {

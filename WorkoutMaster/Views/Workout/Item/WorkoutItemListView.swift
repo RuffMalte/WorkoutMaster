@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WorkoutItemListView: View {
 	
+	@Bindable var workout: WorkoutModel
+	
 	@State private var isShowingDetails: Bool = false
 	
     var body: some View {
@@ -17,10 +19,11 @@ struct WorkoutItemListView: View {
 		} label: {
 			HStack {
 				VStack(alignment: .leading) {
-					Text("Name")
+					Text(workout.name)
 						.font(.system(.headline, design: .rounded, weight: .bold))
-					Text("Description")
-						.font(.subheadline)
+					Text(workout.calculatedSetsAndExercises)
+						.font(.system(.subheadline, design: .rounded, weight: .medium))
+						.foregroundStyle(.secondary)
 				}
 				Spacer()
 				
@@ -30,19 +33,19 @@ struct WorkoutItemListView: View {
 			.padding()
 			.background() {
 				RoundedRectangle(cornerRadius: 10)
-					.foregroundStyle(.white)
+					.foregroundStyle(Color.adaptiveBlackWhite)
 			}
 		}
 		.buttonStyle(.plain)
 		
 		.sheet(isPresented: $isShowingDetails) {
-			WorkoutItemSheetView()
+			WorkoutItemSheetView(workout: workout)
 			.presentationDetents( [.medium, .large])
 		}
     }
 }
 
 #Preview {
-    WorkoutItemListView()
+	WorkoutItemListView(workout: WorkoutModel.preview)
 		.background(.bar)
 }

@@ -34,7 +34,7 @@ struct ExercisesListView: View {
 					
 					ForEach(exercises) { exercise in
 						ExerciseItemListView(exercise: exercise)
-							.coloredRoundedBackground(.white, padding: PaddingConstants.medium)
+							.coloredRoundedBackground(Color.adaptiveBlackWhite, padding: PaddingConstants.medium)
 					}
 				}
 			}
@@ -50,7 +50,6 @@ struct ExercisesListView: View {
 						Image(systemName: "plus")
 							.fontWeight(.bold)
 					}
-
 				}
 			}
 			.sheet(isPresented: $isShowingAddExerciseView) {

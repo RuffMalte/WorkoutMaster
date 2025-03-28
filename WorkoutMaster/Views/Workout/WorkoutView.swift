@@ -6,22 +6,27 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WorkoutView: View {
 	
 	@State private var isShowingExerciseSheetView: Bool = false
+	@State private var isShowingAddWorkoutSheetView: Bool = false
+	
+	@Query(sort: \WorkoutModel.name) var workouts: [WorkoutModel]
+	@Environment(\.modelContext) var modelContext
 	
     var body: some View {
 		NavigationStack {
 			ScrollView(.vertical) {
 				VStack {
-					ForEach(1...3, id: \.self) { int in
-						WorkoutItemListView()
+					ForEach(workouts) { workout in
+						WorkoutItemListView(workout: workout)
 							
 					}
 					
 					Button {
-						
+						isShowingAddWorkoutSheetView.toggle()
 					} label: {
 					
 						Label("Add Workout plan", systemImage: "plus")
@@ -41,6 +46,9 @@ struct WorkoutView: View {
 			.sheet(isPresented: $isShowingExerciseSheetView) {
 				ExercisesListView()
 			}
+			.sheet(isPresented: $isShowingAddWorkoutSheetView) {
+				ModifyWorkoutSheetView(workout: WorkoutModel.preview, isNewWorkout: true)
+			}
 			
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
@@ -54,7 +62,7 @@ struct WorkoutView: View {
 				
 				ToolbarItem(placement: .primaryAction) {
 					Button {
-						
+						isShowingAddWorkoutSheetView.toggle()
 					} label: {
 						Image(systemName: "plus")
 							.fontWeight(.bold)
@@ -69,4 +77,5 @@ struct WorkoutView: View {
 
 #Preview {
     WorkoutView()
+		.modelContainer(previewContainer)
 }
