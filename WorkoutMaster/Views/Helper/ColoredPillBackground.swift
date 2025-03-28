@@ -7,12 +7,39 @@
 
 import SwiftUI
 
-struct ColoredPillBackground: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct ColoredPillBackground: ViewModifier {
+	let color: Color
+	
+	func body(content: Content) -> some View {
+		content
+			.padding()
+			.background {
+				RoundedRectangle(cornerRadius: 40)
+					.foregroundStyle(color)
+			}
+	}
 }
 
-#Preview {
-    ColoredPillBackground()
+
+struct BarColoredPillBackground: ViewModifier {
+	func body(content: Content) -> some View {
+		content
+			.padding()
+			.background {
+				RoundedRectangle(cornerRadius: 40)
+					.foregroundStyle(.bar)
+			}
+	}
+}
+
+
+extension View {
+	func coloredPillBackground(_ color: Color = .green) -> some View {
+		self.modifier(ColoredPillBackground(color: color))
+	}
+	
+	func barColoredPillBackground() -> some View {
+		self.modifier(BarColoredPillBackground())
+	}
+	
 }

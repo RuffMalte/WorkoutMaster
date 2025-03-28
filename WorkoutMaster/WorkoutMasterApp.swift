@@ -17,7 +17,7 @@ struct WorkoutMasterApp: App {
 	init() {
 		let schema = Schema([
 			ExerciseModel.self,
-			ExerciseSetGroup.self,
+			ExerciseSetGroupModel.self,
 			WorkoutGroupModel.self,
 			WorkoutModel.self,
 			WorkoutSetModel.self

@@ -36,11 +36,7 @@ struct WorkoutItemListView: View {
 		.buttonStyle(.plain)
 		
 		.sheet(isPresented: $isShowingDetails) {
-			NavigationStack {
-				VStack {
-					Text("hello")
-				}
-			}
+			WorkoutItemSheetView()
 			.presentationDetents( [.medium, .large])
 		}
     }

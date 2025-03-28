@@ -7,12 +7,37 @@
 
 import SwiftUI
 
-struct ColoredRoundedBackground: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct ColoredRoundedBackground: ViewModifier {
+	let color: Color
+	
+	func body(content: Content) -> some View {
+		content
+			.padding()
+			.background {
+				RoundedRectangle(cornerRadius: 10)
+					.foregroundStyle(color)
+			}
+	}
 }
 
-#Preview {
-    ColoredRoundedBackground()
+struct BarColoredRoundedBackground: ViewModifier {
+	func body(content: Content) -> some View {
+		content
+			.padding()
+			.background {
+				RoundedRectangle(cornerRadius: 10)
+					.foregroundStyle(.bar)
+			}
+	}
+}
+
+
+extension View {
+	func coloredRoundedBackground(_ color: Color = .green) -> some View {
+		self.modifier(ColoredRoundedBackground(color: color))
+	}
+	
+	func barColoredRoundedBackground() -> some View {
+		self.modifier(BarColoredRoundedBackground())
+	}
 }
