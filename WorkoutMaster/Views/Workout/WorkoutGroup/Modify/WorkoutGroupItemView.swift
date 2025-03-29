@@ -37,6 +37,9 @@ struct ModifyWorkoutGroupItemView: View {
 					}
 				} label: {
 					Image(systemName: "line.3.horizontal.circle.fill")
+						.fontWeight(.bold)
+						.font(.headline)
+
 				}
 				
 			}
