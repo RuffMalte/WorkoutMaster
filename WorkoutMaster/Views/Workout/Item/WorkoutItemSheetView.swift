@@ -30,7 +30,7 @@ struct WorkoutItemSheetView: View {
 					ForEach(workout.groups) { group in
 						VStack(alignment: .leading) {
 							Text(group.name)
-								.font(.system(.headline, design: .rounded, weight: .bold))
+								.font(.system(.subheadline, design: .rounded, weight: .bold))
 
 							HStack {
 								Divider()
