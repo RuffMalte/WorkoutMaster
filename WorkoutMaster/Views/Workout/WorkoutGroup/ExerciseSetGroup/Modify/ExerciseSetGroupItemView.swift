@@ -39,7 +39,17 @@ struct ModifyExerciseSetGroupItemView: View {
 			
 			Button {
 				withAnimation {
-					setGroup.sets.append(WorkoutSetModel.preview)
+					if let lastItem = setGroup.sets.last {
+						let newLastItem = WorkoutSetModel()
+						newLastItem.reps = lastItem.reps
+						newLastItem.weight = lastItem.weight
+						newLastItem.duration = lastItem.duration
+						
+						setGroup.sets.append(newLastItem)
+						
+					} else {
+						setGroup.sets.append(WorkoutSetModel.newModel)
+					}
 				}
 			} label: {
 				Text("Add set")
@@ -52,7 +62,7 @@ struct ModifyExerciseSetGroupItemView: View {
 		.background(
 			RoundedRectangle(cornerRadius: RadiusConstants.medium)
 				.foregroundStyle(Color.adaptiveBlackWhite)
-				.shadow(radius: 3)
+//				.shadow(radius: 3)
 		)
     }
 }

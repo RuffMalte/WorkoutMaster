@@ -15,6 +15,8 @@ struct ModifyWorkoutGroupItemView: View {
 	
 	@State private var randomColor: Color = .random()
 
+	@State private var isShowingExersicePicker: Bool = false
+	
     var body: some View {
 		VStack(alignment: .leading) {
 			
@@ -60,9 +62,10 @@ struct ModifyWorkoutGroupItemView: View {
 					}
 					
 					Button {
-						withAnimation {
-							group.setGroups.append(ExerciseSetGroupModel.preview)
-						}
+						isShowingExersicePicker.toggle()
+//						withAnimation {
+//							group.setGroups.append(ExerciseSetGroupModel.preview)
+//						}
 					} label: {
 						Label("Add exercise", systemImage: "plus")
 							.foregroundStyle(.primary)
@@ -75,6 +78,17 @@ struct ModifyWorkoutGroupItemView: View {
 				.padding(.horizontal, PaddingConstants.small)
 				
 				Spacer()
+			}
+		}
+		.sheet(isPresented: $isShowingExersicePicker) {
+			ExercisePickerView { selectedExercises in
+				for exercise in selectedExercises {
+					let newSetGroup = ExerciseSetGroupModel(
+						exercise: exercise,
+						sets: []
+					)
+					group.setGroups.append(newSetGroup)
+				}
 			}
 		}
     }

@@ -77,6 +77,10 @@ extension WorkoutGroupModel {
 		return group
 	}
 	
+	static var newModel: WorkoutGroupModel {
+		return WorkoutGroupModel(name: "Group 1", order: 1)
+	}
+	
 	static var previewItems: [WorkoutGroupModel] {
 		return [
 			.init(name: "name 1", order: 1),
@@ -94,6 +98,10 @@ extension WorkoutSetModel {
 	static var preview: WorkoutSetModel {
 		return WorkoutSetModel(
 			weight: 29, reps: 2, duration: TimeInterval.infinity)
+	}
+	
+	static var newModel: WorkoutSetModel {
+		return WorkoutSetModel(weight: 0, reps: 0, duration: 0)
 	}
 	
 }

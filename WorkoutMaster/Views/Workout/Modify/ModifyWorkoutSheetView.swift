@@ -47,7 +47,15 @@ struct ModifyWorkoutSheetView: View {
 					
 					Button {
 						withAnimation {
-							workout.groups.append(WorkoutGroupModel.preview)
+							let newModel = WorkoutGroupModel.newModel
+							
+							if !workout.groups.isEmpty {
+								newModel.order = workout.groups.count + 1
+								
+								newModel.name = "Group \(workout.groups.count + 1)"
+							}
+							
+							workout.groups.append(newModel)
 						}
 					} label: {
 						Label("Add new Group", systemImage: "rectangle.3.group.fill")
