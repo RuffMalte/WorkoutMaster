@@ -43,6 +43,10 @@ extension WorkoutModel {
 		return workout
 	}
 	
+	static var newModel: WorkoutModel {
+		return WorkoutModel(name: "Name")
+	}
+	
 	static var previewItems: [WorkoutModel] {
 		return [
 			WorkoutModel(name: "Hello"),

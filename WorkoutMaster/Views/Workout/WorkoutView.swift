@@ -47,7 +47,7 @@ struct WorkoutView: View {
 				ExercisesListView()
 			}
 			.sheet(isPresented: $isShowingAddWorkoutSheetView) {
-				ModifyWorkoutSheetView(workout: WorkoutModel.preview, isNewWorkout: true)
+				ModifyWorkoutSheetView(workout: WorkoutModel.newModel, isNewWorkout: true)
 			}
 			
 			.toolbar {
