@@ -22,18 +22,18 @@ class WorkoutModel: Identifiable {
 		self.date = date
 	}
 	
-	
-	func addNewGroup() -> WorkoutGroupModel {
-		var groupAmount: Int = groups.count
-		
-		let newGroup = WorkoutGroupModel(name: "Group \(groupAmount + 1)", order: groupAmount + 1)
-		
-		groups.append(newGroup)
-		return newGroup
-	}
-	
 	var calculatedSetsAndExercises: String {
-		return "heeeeellllooooooo"
+		var totalExercises = 0
+		var totalSets = 0
+		
+		for group in groups {
+			for setGroup in group.setGroups {
+				totalSets += setGroup.sets.count
+			}
+			totalExercises += group.setGroups.count
+		}
+		
+		return "\(totalExercises) exercises, \(totalSets) sets"
 	}
 
 	
