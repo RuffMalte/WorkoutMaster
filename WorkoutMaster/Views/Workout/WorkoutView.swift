@@ -22,7 +22,13 @@ struct WorkoutView: View {
 				VStack {
 					ForEach(workouts) { workout in
 						WorkoutItemListView(workout: workout)
-							
+							.contextMenu {
+								Button(role: .destructive) {
+									deleteWorkout(workout)
+								} label: {
+									Label("Delete", systemImage: "trash.fill")
+								}
+							}
 					}
 					
 					Button {
@@ -73,6 +79,11 @@ struct WorkoutView: View {
 			
 		}
     }
+	private func deleteWorkout(_ workout: WorkoutModel) {
+		if let index = workouts.firstIndex(of: workout) {
+			modelContext.delete(workouts[index])
+		}
+	}
 }
 
 #Preview {

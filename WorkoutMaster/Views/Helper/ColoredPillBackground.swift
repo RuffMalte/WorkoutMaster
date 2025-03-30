@@ -12,12 +12,14 @@ struct ColoredPillBackground: ViewModifier {
 	let padding: CGFloat
 	let radius: CGFloat
 	
+	@Environment(\.isEnabled) private var isEnabled // Observe whether the view is enabled
+	
 	func body(content: Content) -> some View {
 		content
 			.padding(padding)
 			.background {
 				RoundedRectangle(cornerRadius: radius)
-					.foregroundStyle(color)
+					.foregroundStyle(isEnabled ? color : Color.gray.opacity(0.5)) // Use gray when disabled
 			}
 	}
 }

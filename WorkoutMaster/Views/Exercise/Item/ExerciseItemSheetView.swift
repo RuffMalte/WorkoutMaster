@@ -13,6 +13,7 @@ struct ExerciseItemSheetView: View {
 	@Bindable var exercise: ExerciseModel
 	
 	@Query(sort: \ExerciseModel.name) var exercises: [ExerciseModel]
+	@Query(sort: \ExerciseSetGroupModel.exercise.name) var setGroups: [ExerciseSetGroupModel]
 	@Environment(\.modelContext) var modelContext
 
 	@Environment(\.dismiss) var dismiss
@@ -62,7 +63,9 @@ struct ExerciseItemSheetView: View {
 						.foregroundStyle(.white)
 						.fontWeight(.bold)
 				}
-				.coloredPillBackground(.red)
+				.disabled(!canDeleteExercise())
+				.coloredPillBackground(canDeleteExercise() ? .red : .gray.opacity(0.5))
+				
 
 			}
 		
@@ -72,6 +75,13 @@ struct ExerciseItemSheetView: View {
 			ModifyExerciseSheetView(exercise: exercise, isNewExercise: false)
 		}
     }
+	
+	func canDeleteExercise() -> Bool {		
+		if setGroups.contains(where: { $0.exercise.id == exercise.id }) {
+			return false
+		}
+		return true
+	}
 }
 
 #Preview {
