@@ -12,18 +12,11 @@ struct WorkoutItemSheetView: View {
 	@Bindable var workout: WorkoutModel
 	
 	@State private var isShowingEditWorkoutSheet: Bool = false
+	@State private var isShowingWorkout: Bool = false
 	
     var body: some View {
 		VStack(alignment: .leading) {
-			Text(workout.name)
-				.font(.system(.headline, design: .rounded, weight: .bold))
-			
-			Text(workout.calculatedSetsAndExercises)
-				.font(.system(.subheadline, weight: .semibold))
-				.foregroundStyle(.secondary)
-			
-			Divider()
-			
+			WorkoutItemHeaderView(workout: workout)
 			
 			VStack {
 				ScrollView(.vertical) {
@@ -65,7 +58,7 @@ struct WorkoutItemSheetView: View {
 			HStack {
 				
 				Button {
-					
+					isShowingWorkout.toggle()
 				} label: {
 					Label("Start Workout", systemImage: "play.fill")
 						.foregroundStyle(.primary)
@@ -93,6 +86,9 @@ struct WorkoutItemSheetView: View {
 		.background(.bar)
 		.sheet(isPresented: $isShowingEditWorkoutSheet) {
 			ModifyWorkoutSheetView(workout: workout, isNewWorkout: false)
+		}
+		.fullScreenCover(isPresented: $isShowingWorkout) {
+			WorkoutPlayingView(workout: workout)
 		}
     }
 }
