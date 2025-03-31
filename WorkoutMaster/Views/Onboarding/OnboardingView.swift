@@ -78,4 +78,5 @@ struct OnboardingView: View {
 
 #Preview {
     OnboardingView()
+		.withEnvironmentObjects()
 }
