@@ -28,7 +28,6 @@ struct WorkoutMasterApp: App {
 		} catch {
 			fatalError("Could not configure the container")
 		}
-		print(URL.applicationSupportDirectory.path(percentEncoded: false))
 	}
 
 	
@@ -36,6 +35,7 @@ struct WorkoutMasterApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+				.environmentObject(HealthKitManager.shared)
         }
 		.modelContainer(container)
     }

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+	@EnvironmentObject private var healthKit: HealthKitManager
+
+	
     var body: some View {
 		TabView {
 			Tab("Workouts", systemImage: "figure.run") {
@@ -15,7 +18,13 @@ struct ContentView: View {
 			}
 			
 			Tab("History", systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90") {
-				Text("helloππ")
+				VStack {
+					if healthKit.latestHeartRate == 9999 {
+						Text("No heart rate data")
+					} else {
+						Text("Current HR: \(Int(healthKit.latestHeartRate))")
+					}
+				}
 			}
 			
 			Tab("Biology", systemImage: "heart.fill") {
@@ -23,6 +32,8 @@ struct ContentView: View {
 			}
 		}
 		.tabViewStyle(.sidebarAdaptable)
+		.onAppear { healthKit.setupHealthKit() } // Only call setup once
+		.onDisappear { healthKit.stopMonitoringHeartRate() }
     }
 }
 

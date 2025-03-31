@@ -13,6 +13,8 @@ struct WorkoutPlayingView: View {
 	@StateObject private var timerVM = TimerViewModel()
 	@StateObject private var progressionVM: WorkoutProgressionViewModel
 
+	@EnvironmentObject private var healthKitManager: HealthKitManager
+
 	init(workout: WorkoutModel) {
 		self.workout = workout
 		self._progressionVM = StateObject(wrappedValue: WorkoutProgressionViewModel(workout: workout))
@@ -41,9 +43,17 @@ struct WorkoutPlayingView: View {
 				
 				Spacer()
 				
-				Label("120", systemImage: "heart.fill")
+				if healthKitManager.isAvailable {
+					Label(
+						"\(Int(healthKitManager.latestHeartRate))",
+						systemImage: "heart.fill"
+					)
 					.foregroundStyle(.red)
 					.symbolEffect(.bounce.up.byLayer, options: .repeat(.periodic(delay: 0.3)))
+				} else {
+					Label("N/A", systemImage: "heart.slash")
+						.foregroundStyle(.gray)
+				}
 			}
 			.font(.system(.subheadline, design: .monospaced, weight: .medium))
 			
@@ -116,9 +126,13 @@ struct WorkoutPlayingView: View {
 		.onAppear {
 			progressionVM.initializeWorkout()
 			timerVM.startTimer()
+			healthKitManager.setupHealthKit()
+			healthKitManager.startMonitoringHeartRate()
 		}
 		.onDisappear {
 			timerVM.stopTimer()
+			healthKitManager.stopMonitoringHeartRate()
+
 		}
 	}
 }
