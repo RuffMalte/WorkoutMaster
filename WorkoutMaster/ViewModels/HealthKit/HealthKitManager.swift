@@ -13,7 +13,7 @@ class HealthKitManager: ObservableObject {
 	@Published var isAvailable: Bool = false
 	@Published var error: Error? = nil
 	
-	private let healthStore = HKHealthStore()
+	let healthStore = HKHealthStore()
 	private var heartRateQuery: HKQuery?
 	private var observerQuery: HKObserverQuery?
 
@@ -28,21 +28,22 @@ class HealthKitManager: ObservableObject {
 			return
 		}
 		
-		let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
+		let typesToWrite: Set<HKSampleType> = [
+			.workoutType(),
+			HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!
+		]
 		
-		healthStore.requestAuthorization(toShare: nil, read: [heartRateType]) { success, error in
+		let typesToRead: Set<HKObjectType> = [
+			.workoutType(),
+			HKObjectType.quantityType(forIdentifier: .heartRate)!
+		]
+		
+		healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { success, error in
 			DispatchQueue.main.async {
-				if let error = error {
-					self.error = error
-					self.isAvailable = false
-					return
-				}
-				
 				self.isAvailable = success
+				self.error = error
 				if success {
 					self.startMonitoringHeartRate()
-				} else {
-					self.error = HKError(.errorAuthorizationDenied)
 				}
 			}
 		}

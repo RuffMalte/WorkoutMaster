@@ -86,7 +86,26 @@ struct WorkoutPlayingView: View {
 					}
 					
 					if progressionVM.advanceWorkout() {
-						dismiss()
+						let startDate = progressionVM.startDate
+						let endDate = Date()
+						let caloriesBurned = progressionVM.totalCalories
+						
+						healthKitManager.saveWorkout(
+							activityType: .functionalStrengthTraining,
+							start: startDate,
+							end: endDate,
+							caloriesBurned: caloriesBurned
+						) { success, error in
+							DispatchQueue.main.async {
+								if success {
+									print("Workout saved to HealthKit!")
+									//TODO: Post workout report
+									dismiss()
+								} else {
+									print("Error saving workout:", error?.localizedDescription ?? "Unknown error")
+								}
+							}
+						}
 					}
 				} label: {
 					if progressionVM.hasMoreExercises {

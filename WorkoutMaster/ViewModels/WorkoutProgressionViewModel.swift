@@ -14,6 +14,8 @@ class WorkoutProgressionViewModel: ObservableObject {
 	@Published var currentSetIndex = 0
 	@Published var completedReps = 0
 	@Published var workoutCompleted = false
+	@Published var startDate: Date = Date()
+	@Published var totalCalories: Double = 0
 	
 	init(workout: WorkoutModel) {
 		self.workout = workout

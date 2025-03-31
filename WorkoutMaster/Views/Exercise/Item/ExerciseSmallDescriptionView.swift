@@ -28,7 +28,7 @@ struct ExerciseSmallDescriptionView: View {
 }
 
 #Preview {
-	var variable: String = "abc"
+	let variable: String = "abc"
 	
 	ExerciseSmallDescriptionView(title: "test", variable: variable)
 }
