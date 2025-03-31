@@ -139,4 +139,5 @@ struct WorkoutPlayingView: View {
 
 #Preview {
 	WorkoutPlayingView(workout: WorkoutModel.preview)
+		.withEnvironmentObjects()
 }
