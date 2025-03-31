@@ -20,11 +20,14 @@ class ExerciseModel {
 	
 	@Relationship(deleteRule: .nullify) var setGroups: [ExerciseSetGroupModel]?
 	
-	init(name: String, category: ExerciseCategory, bodyPart: BodyPart) {
+	init(name: String, category: ExerciseCategory, bodyPart: BodyPart, explanation: String = "", metValue: Double = 2.0, equipment: [ExerciseEquipment] = []) {
 		self.id = UUID()
 		self.name = name
 		self.category = category
 		self.bodyPart = bodyPart
+		self.explanation = explanation
+		self.metValue = metValue
+		self.equipment = equipment
 	}
 	
 	var formatedEquipment: String {

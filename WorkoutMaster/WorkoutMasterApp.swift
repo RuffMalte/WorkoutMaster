@@ -13,6 +13,8 @@ struct WorkoutMasterApp: App {
 	
 	
 	let container: ModelContainer
+	@AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+	@State private var showOnboarding = false
 	
 	init() {
 		let schema = Schema([
@@ -36,7 +38,32 @@ struct WorkoutMasterApp: App {
         WindowGroup {
             ContentView()
 				.environmentObject(HealthKitManager.shared)
+				.onAppear {
+					if !hasCompletedOnboarding {
+						showOnboarding = true
+					}
+				}
+				.sheet(isPresented: $showOnboarding) {
+					OnboardingView()
+						.environmentObject(HealthKitManager.shared)
+						.modelContainer(container)
+				}
+				.onChange(of: hasCompletedOnboarding) { _, newValue in
+					if newValue {
+						preloadDefaultExercises()
+					}
+				}
         }
 		.modelContainer(container)
     }
+	
+	private func preloadDefaultExercises() {
+		let context = ModelContext(container)
+		let exerciseCount = (try? context.fetchCount(FetchDescriptor<ExerciseModel>())) ?? 0
+		
+		if exerciseCount == 0 {
+			DefaultExerciseLoader.loadDefaultExercises(context: context)
+			try? context.save()
+		}
+	}
 }

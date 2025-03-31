@@ -14,14 +14,6 @@ struct ContentView: View {
 			Tab("Workouts", systemImage: "figure.run") {
 				WorkoutView()
 			}
-			
-			Tab("History", systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90") {
-				Text("hawd")
-			}
-			
-			Tab("Biology", systemImage: "heart.fill") {
-				Text("helloππ")
-			}
 		}
 		.tabViewStyle(.sidebarAdaptable)
     }
