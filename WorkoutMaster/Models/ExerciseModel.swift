@@ -15,6 +15,7 @@ class ExerciseModel {
 	var category: ExerciseCategory
 	var bodyPart: BodyPart
 	var explanation: String = ""
+	var metValue: Double = 2.0
 	var equipment: [ExerciseEquipment] = []
 	
 	@Relationship(deleteRule: .nullify) var setGroups: [ExerciseSetGroupModel]?

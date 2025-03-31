@@ -17,6 +17,8 @@ struct ModifyExerciseSheetView: View {
 	@Query(sort: \ExerciseModel.name) var exercises: [ExerciseModel]
 	@Environment(\.modelContext) var modelContext
 	
+	@State private var isShowingMetInfo: Bool = false
+	
     var body: some View {
 		NavigationStack {
 			Form {
@@ -78,6 +80,36 @@ struct ModifyExerciseSheetView: View {
 						}
 						.foregroundColor(.primary)
 					}
+				
+				Section {
+					DoubleInputView(number: $exercise.metValue, maxValue: 20, placeholder: "MET value", decimalPlaces: 2)
+				} header: {
+					HStack {
+						Text("MET Value")
+						Spacer()
+						Button {
+							isShowingMetInfo.toggle()
+						} label: {
+							Image(systemName: "info.circle")
+								.font(.subheadline)
+						}
+						.buttonStyle(.plain)
+						.popover(isPresented: $isShowingMetInfo) {
+							VStack {
+								ScrollView(.vertical) {
+									Text("A MET (Metabolic Equivalent of Task) is a measure used to indicate the intensity of an activity by comparing it to your resting energy expenditure. Specifically, 1 MET represents the amount of energy your body uses while sitting quietly. For example, an activity with a MET value of 4 means you’re burning four times the energy you would at rest")
+										.textCase(nil)
+								}
+							}
+							.presentationCompactAdaptation(.popover)
+							.padding()
+							.frame(height: 150)
+							.font(.system(.footnote, design: .rounded, weight: .regular))
+
+						}
+
+					}
+				}
 				
 				
 			}

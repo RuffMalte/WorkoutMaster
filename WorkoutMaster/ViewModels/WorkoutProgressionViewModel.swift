@@ -16,9 +16,12 @@ class WorkoutProgressionViewModel: ObservableObject {
 	@Published var workoutCompleted = false
 	@Published var startDate: Date = Date()
 	@Published var totalCalories: Double = 0
+	private var updateTimer: Timer?
+	@Published var lastUpdateTime = Date()
 	
 	init(workout: WorkoutModel) {
 		self.workout = workout
+		startCalorieTimer()
 	}
 	
 	var currentExerciseName: String {
@@ -114,6 +117,8 @@ class WorkoutProgressionViewModel: ObservableObject {
 	
 	func advanceWorkout() -> Bool {
 		guard completedReps == currentSet.reps else { return false }
+		updateCalories()
+
 		
 		if currentSetIndex + 1 < currentExercise.sets.count {
 			currentSetIndex += 1
@@ -138,5 +143,25 @@ class WorkoutProgressionViewModel: ObservableObject {
 		
 		workoutCompleted = true
 		return true
+	}
+	
+	private func startCalorieTimer() {
+		updateTimer = Timer.scheduledTimer(
+			withTimeInterval: 5,  // Update every 5 seconds
+			repeats: true
+		) { [weak self] _ in
+			self?.updateCalories()
+		}
+	}
+	
+	func updateCalories() {
+		let duration = Date().timeIntervalSince(startDate) / 60
+		let currentMET = currentExercise.exercise.metValue
+				
+		totalCalories = CalorieCalculator.caloriesBurned(
+			met: currentMET,
+			weightKg: HealthKitManager.shared.userWeight,
+			durationMinutes: duration
+		)
 	}
 }

@@ -12,7 +12,8 @@ class HealthKitManager: ObservableObject {
 	@Published var latestHeartRate: Double = 9999
 	@Published var isAvailable: Bool = false
 	@Published var error: Error? = nil
-	
+	@Published var userWeight: Double = 70
+
 	let healthStore = HKHealthStore()
 	private var heartRateQuery: HKQuery?
 	private var observerQuery: HKObserverQuery?
@@ -35,7 +36,8 @@ class HealthKitManager: ObservableObject {
 		
 		let typesToRead: Set<HKObjectType> = [
 			.workoutType(),
-			HKObjectType.quantityType(forIdentifier: .heartRate)!
+			HKObjectType.quantityType(forIdentifier: .heartRate)!,
+			HKObjectType.quantityType(forIdentifier: .bodyMass)!
 		]
 		
 		healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { success, error in
