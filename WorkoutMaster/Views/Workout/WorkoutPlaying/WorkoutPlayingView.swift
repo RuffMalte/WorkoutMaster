@@ -59,7 +59,11 @@ struct WorkoutPlayingView: View {
 			
 			ProgressView(value: progressionVM.calculateProgress())
 			
-			CurrentExerciseView(exerciseName: progressionVM.currentExerciseName)
+			CurrentExerciseView(
+				exercise: progressionVM.currentExercise.exercise,
+				completedReps: progressionVM.completedReps,
+				totalReps: progressionVM.currentSet.reps
+			)
 			
 			RepCounterView(
 				currentSetIndex: progressionVM.currentSetIndex,
