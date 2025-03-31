@@ -136,7 +136,7 @@ struct WorkoutPlayingView: View {
 			
 			NextExerciseInfoView(
 				nextExercise: progressionVM.nextExercise,
-				caloriesBurned: 12
+				caloriesBurned: Int(progressionVM.totalCalories)
 			)
 			
 			Button {
