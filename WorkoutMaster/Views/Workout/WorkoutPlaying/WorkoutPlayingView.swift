@@ -85,28 +85,32 @@ struct WorkoutPlayingView: View {
 				)
 				
 				Button {
-					if progressionVM.completedReps < progressionVM.currentSet.reps {
-						progressionVM.completeAllReps()
-					}
-					
-					if progressionVM.advanceWorkout() {
-						let startDate = progressionVM.startDate
-						let endDate = Date()
-						let caloriesBurned = progressionVM.totalCalories
+					withAnimation {
 						
-						healthKitManager.saveWorkout(
-							activityType: .functionalStrengthTraining,
-							start: startDate,
-							end: endDate,
-							caloriesBurned: caloriesBurned
-						) { success, error in
-							DispatchQueue.main.async {
-								if success {
-									print("Workout saved to HealthKit!")
-									//TODO: Post workout report
-									dismiss()
-								} else {
-									print("Error saving workout:", error?.localizedDescription ?? "Unknown error")
+						
+						if progressionVM.completedReps < progressionVM.currentSet.reps {
+							progressionVM.completeAllReps()
+						}
+						
+						if progressionVM.advanceWorkout() {
+							let startDate = progressionVM.startDate
+							let endDate = Date()
+							let caloriesBurned = progressionVM.totalCalories
+							
+							healthKitManager.saveWorkout(
+								activityType: .functionalStrengthTraining,
+								start: startDate,
+								end: endDate,
+								caloriesBurned: caloriesBurned
+							) { success, error in
+								DispatchQueue.main.async {
+									if success {
+										print("Workout saved to HealthKit!")
+										//TODO: Post workout report
+										dismiss()
+									} else {
+										print("Error saving workout:", error?.localizedDescription ?? "Unknown error")
+									}
 								}
 							}
 						}
@@ -136,7 +140,9 @@ struct WorkoutPlayingView: View {
 			)
 			
 			Button {
-				timerVM.toggleTimer()
+				withAnimation {
+					timerVM.toggleTimer()
+				}
 			} label: {
 				Label(timerVM.isRunning ? "Stop" : "Resume", systemImage: timerVM.isRunning ? "pause" : "play")
 					.foregroundStyle(.white)

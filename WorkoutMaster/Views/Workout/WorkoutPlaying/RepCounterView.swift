@@ -32,7 +32,9 @@ struct RepCounterView: View {
 				
 				HStack {
 					Button {
-						onDecrement()
+						withAnimation {
+							onDecrement()
+						}
 					} label: {
 						Image(systemName: "minus.circle.fill")
 							.font(.title2)
@@ -43,7 +45,9 @@ struct RepCounterView: View {
 						.font(.system(.title2, design: .monospaced, weight: .bold))
 					
 					Button {
-						onIncrement()
+						withAnimation {
+							onIncrement()
+						}
 					} label: {
 						Image(systemName: "plus.circle.fill")
 							.font(.title2)

@@ -19,7 +19,9 @@ struct RepActionButtonsView: View {
 			.init(.flexible(minimum: 20))
 		], alignment: .center, spacing: 10) {
 			Button {
-				onQuarterReps()
+				withAnimation {
+					onQuarterReps()
+				}
 			} label: {
 				Label("1/4", systemImage: "square.split.bottomrightquarter.fill")
 					.centeredHStack()
@@ -27,7 +29,9 @@ struct RepActionButtonsView: View {
 			.coloredPillBackground(.blue)
 			
 			Button {
-				onHalfReps()
+				withAnimation {
+					onHalfReps()
+				}
 			} label: {
 				Label("Half", systemImage: "square.split.2x1.fill")
 					.centeredHStack()
@@ -35,7 +39,9 @@ struct RepActionButtonsView: View {
 			.coloredPillBackground(.purple)
 			
 			Button {
-				onAllReps()
+				withAnimation {
+					onAllReps()
+				}
 			} label: {
 				Label("All", systemImage: "square.fill")
 					.centeredHStack()
@@ -54,5 +60,6 @@ struct RepActionButtonsView: View {
 	} onAllReps: {
 		print("All")
 	}
-
+	.buttonStyle(.plain)
+	.foregroundStyle(.white)
 }
