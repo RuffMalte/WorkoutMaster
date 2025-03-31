@@ -32,13 +32,14 @@ struct CurrentExerciseView: View {
 						)
 					)
 					.foregroundColor(.blue)
-					.rotationEffect(.degrees(-90)) // Start from top
+					.rotationEffect(.degrees(-90))
 				
 				//TODO: Image placeholder
 				RoundedRectangle(cornerRadius: RadiusConstants.medium)
 					.frame(width: 100, height: 100)
 					.foregroundColor(.secondary.opacity(0.2))
 			}
+			.frame(width: 180, height: 180)
 			.padding(.vertical, PaddingConstants.small)
 			
 			VStack(spacing: 8) {
