@@ -55,7 +55,7 @@ struct CurrentExerciseView: View {
 				
 				if !exercise.equipment.isEmpty {
 					Label(
-						exercise.equipment.map { $0.name }.joined(separator: ", "),
+						exercise.formatedEquipment,
 						systemImage: "hammer.fill"
 					)
 					.font(.subheadline)
