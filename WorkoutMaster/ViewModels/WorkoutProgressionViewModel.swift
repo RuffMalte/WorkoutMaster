@@ -18,6 +18,7 @@ class WorkoutProgressionViewModel: ObservableObject {
 	@Published var totalCalories: Double = 0
 	private var updateTimer: Timer?
 	@Published var lastUpdateTime = Date()
+	@Published var isWorkoutCompleted = false
 	
 	init(workout: WorkoutModel) {
 		self.workout = workout
@@ -163,5 +164,13 @@ class WorkoutProgressionViewModel: ObservableObject {
 			weightKg: HealthKitManager.shared.userWeight,
 			durationMinutes: duration
 		)
+	}
+	
+	var totalSetsCompleted: Int {
+		workout.groups.flatMap { $0.setGroups }.reduce(0) { $0 + $1.sets.count }
+	}
+	
+	var totalRepsCompleted: Int {
+		workout.groups.flatMap { $0.setGroups }.flatMap { $0.sets }.reduce(0) { $0 + $1.reps }
 	}
 }

@@ -15,6 +15,8 @@ struct WorkoutPlayingView: View {
 
 	@EnvironmentObject private var healthKitManager: HealthKitManager
 
+	@State private var showWorkoutReport = false
+	
 	init(workout: WorkoutModel) {
 		self.workout = workout
 		self._progressionVM = StateObject(wrappedValue: WorkoutProgressionViewModel(workout: workout))
@@ -104,26 +106,7 @@ struct WorkoutPlayingView: View {
 							}
 							
 							if progressionVM.advanceWorkout() {
-								let startDate = progressionVM.startDate
-								let endDate = Date()
-								let caloriesBurned = progressionVM.totalCalories
-								
-								healthKitManager.saveWorkout(
-									activityType: .functionalStrengthTraining,
-									start: startDate,
-									end: endDate,
-									caloriesBurned: caloriesBurned
-								) { success, error in
-									DispatchQueue.main.async {
-										if success {
-											print("Workout saved to HealthKit!")
-											//TODO: Post workout report
-											dismiss()
-										} else {
-											print("Error saving workout:", error?.localizedDescription ?? "Unknown error")
-										}
-									}
-								}
+								self.showWorkoutReport = true
 							}
 						}
 					} label: {
@@ -165,6 +148,37 @@ struct WorkoutPlayingView: View {
 			timerVM.stopTimer()
 			healthKitManager.stopMonitoringHeartRate()
 
+		}
+		.sheet(isPresented: $showWorkoutReport) {
+			WorkoutReportView(
+				workout: workout,
+				totalDuration: timerVM.timeElapsed,
+				totalSets: progressionVM.totalSetsCompleted,
+				totalReps: progressionVM.totalRepsCompleted,
+				caloriesBurned: progressionVM.totalCalories,
+				onSave: {
+					let startDate = progressionVM.startDate
+					let endDate = Date()
+					
+					healthKitManager.saveWorkout(
+						activityType: .functionalStrengthTraining,
+						start: startDate,
+						end: endDate,
+						caloriesBurned: progressionVM.totalCalories
+					) { success, error in
+						DispatchQueue.main.async {
+							if success {
+								print("Workout saved to HealthKit!")
+								dismiss()
+							} else {
+								print("Error saving workout:", error?.localizedDescription ?? "Unknown error")
+							}
+						}
+					}
+				}
+			)
+			.environmentObject(healthKitManager)
+			.presentationDetents([.medium, .large])
 		}
 	}
 }
