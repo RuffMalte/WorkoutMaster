@@ -73,7 +73,7 @@ struct ModifyWorkoutSheetView: View {
 			}
 			.padding()
 			.background(.bar)
-			
+			.presentationDragIndicator(.visible)
 			.toolbar {
 				
 				ToolbarItem(placement: .primaryAction) {

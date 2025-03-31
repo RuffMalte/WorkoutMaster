@@ -113,7 +113,7 @@ struct ModifyExerciseSheetView: View {
 				
 				
 			}
-			
+			.presentationDragIndicator(.visible)
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
 					Button {

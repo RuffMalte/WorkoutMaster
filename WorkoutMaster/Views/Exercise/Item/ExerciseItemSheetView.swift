@@ -71,6 +71,7 @@ struct ExerciseItemSheetView: View {
 		
 			
 		}
+		.presentationDragIndicator(.visible)
 		.sheet(isPresented: $isShowingModifySheet) {
 			ModifyExerciseSheetView(exercise: exercise, isNewExercise: false)
 		}

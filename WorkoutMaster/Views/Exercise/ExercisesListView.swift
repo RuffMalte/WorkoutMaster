@@ -38,7 +38,7 @@ struct ExercisesListView: View {
 					}
 				}
 			}
-			
+			.presentationDragIndicator(.visible)
 			.padding()
 			.navigationTitle("Exercises")
 			.background(.bar)

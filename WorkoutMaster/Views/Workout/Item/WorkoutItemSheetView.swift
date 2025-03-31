@@ -90,6 +90,7 @@ struct WorkoutItemSheetView: View {
 		.fullScreenCover(isPresented: $isShowingWorkout) {
 			WorkoutPlayingView(workout: workout)
 		}
+		.presentationDragIndicator(.visible)
     }
 }
 

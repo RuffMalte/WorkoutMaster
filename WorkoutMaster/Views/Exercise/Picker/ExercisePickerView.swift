@@ -64,6 +64,7 @@ struct ExercisePickerView: View {
 			.padding()
 			.navigationTitle("Exercises")
 			.background(.bar)
+			.presentationDragIndicator(.visible)
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
 					Button {
