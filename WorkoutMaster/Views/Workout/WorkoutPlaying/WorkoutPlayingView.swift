@@ -72,6 +72,7 @@ struct WorkoutPlayingView: View {
 				totalSets: progressionVM.currentExercise.sets.count,
 				completedReps: progressionVM.completedReps,
 				totalReps: progressionVM.currentSet.reps,
+				amountOfWeight: progressionVM.currentSet.weight,
 				onIncrement: progressionVM.incrementReps,
 				onDecrement: progressionVM.decrementReps
 			)

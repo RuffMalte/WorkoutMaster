@@ -12,6 +12,7 @@ struct RepCounterView: View {
 	let totalSets: Int
 	let completedReps: Int
 	let totalReps: Int
+	let amountOfWeight: Double
 	let onIncrement: () -> Void
 	let onDecrement: () -> Void
 	
@@ -19,11 +20,17 @@ struct RepCounterView: View {
 		ZStack {
 			HStack {
 				Text("Set \(currentSetIndex + 1) of \(totalSets)")
-					.font(.system(.subheadline, design: .rounded, weight: .medium))
-					.foregroundStyle(.secondary)
+					
 				Spacer()
+				
+				if amountOfWeight > 0 {
+					Text(amountOfWeight.description + " Kg")
+				} else {
+					Text("Bodyweight")
+				}
 			}
-			
+			.font(.system(.subheadline, design: .rounded, weight: .medium))
+			.foregroundStyle(.secondary)
 			
 			VStack {
 				Text("Completed Reps")
@@ -63,7 +70,7 @@ struct RepCounterView: View {
 }
 
 #Preview {
-	RepCounterView(currentSetIndex: 0, totalSets: 12, completedReps: 12, totalReps: 20) {
+	RepCounterView(currentSetIndex: 0, totalSets: 12, completedReps: 12, totalReps: 20, amountOfWeight: 22.3) {
 		print("increment")
 	} onDecrement: {
 		print("decrement")
